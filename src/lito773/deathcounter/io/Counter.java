@@ -10,8 +10,11 @@ import org.bukkit.plugin.Plugin;
 import static org.bukkit.Bukkit.getLogger;
 
 public class Counter {
-    public static void checkFile(File dataFolder) {
-        File file = new File(dataFolder + File.separator + "counter.yml");
+    private File file;
+    private FileConfiguration counterFile;
+
+    public Counter(File dataFolder) {
+        file = new File(dataFolder + File.separator + "counter.yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -19,6 +22,22 @@ public class Counter {
                 e.printStackTrace();
                 getLogger().severe("UNABLE TO CREATE THE COUNTER FILE");
             }
+        }
+        counterFile = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void incrementDeath(String playerName) {
+        // Increment
+        int currentDeaths = counterFile.getInt(playerName);
+        currentDeaths++;
+        counterFile.set(playerName, currentDeaths);
+
+        // Save the file
+        try {
+            counterFile.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            getLogger().severe("UNABLE TO SAVE THE COUNTER FILE");
         }
     }
 }

@@ -16,11 +16,11 @@ public class Main extends JavaPlugin {
         super.onEnable();
 
         // Creates the necessary files
-        Counter.checkFile(getDataFolder());
-        Messages.checkFile(getDataFolder());
+        Counter c = new Counter(getDataFolder());
+        Messages m = new Messages(getDataFolder());
 
         getLogger().info("Death Counter started!");
-        getServer().getPluginManager().registerEvents(new EventsClass(), this);
+        getServer().getPluginManager().registerEvents(new EventsClass(c, m), this);
     }
 
     @Override
