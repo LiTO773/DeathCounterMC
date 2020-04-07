@@ -1,0 +1,4 @@
+name: DeathCounter
+main: lito773.deathcounter.Main
+version: 0.1
+description: A death counter for a Spigot Minecraft server. Custom messages and Leaderboards included!
