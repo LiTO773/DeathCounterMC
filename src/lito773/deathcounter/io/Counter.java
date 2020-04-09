@@ -13,6 +13,11 @@ public class Counter {
     private File file;
     private FileConfiguration counterFile;
 
+    /**
+     * The constructor will automatically check if the file exists. If it doesn't, it automatically creates the
+     * counter.yml
+     * @param dataFolder Plugin's data folder
+     */
     public Counter(File dataFolder) {
         file = new File(dataFolder + File.separator + "counter.yml");
         if (!file.exists()) {
@@ -26,7 +31,12 @@ public class Counter {
         counterFile = YamlConfiguration.loadConfiguration(file);
     }
 
-    public void incrementDeath(String playerName) {
+    /**
+     * Evoked when a player dies. It will increment the number of deaths registered.
+     * @param playerName Name of the player that died
+     * @return Number of times the player has died
+     */
+    public int incrementDeath(String playerName) {
         // Increment
         int currentDeaths = counterFile.getInt(playerName);
         currentDeaths++;
@@ -39,5 +49,7 @@ public class Counter {
             e.printStackTrace();
             getLogger().severe("UNABLE TO SAVE THE COUNTER FILE");
         }
+
+        return currentDeaths;
     }
 }
